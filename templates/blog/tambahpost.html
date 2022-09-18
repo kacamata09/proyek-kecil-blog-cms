@@ -9,8 +9,17 @@
             {{ form.judul(class='form-control') }}
             {{ form.konten.label }}
             {{ form.konten(class='form-control') }}
+            {{ form.kategori.label }}
+            {{ form.kategori(class='form-control') }}
             <input type="submit" value="Simpan">
         </form>
+    </div>
+</div>
+<div class="row">
+    <div class="col my-4">
+        {% for post in semuapost %}
+        <p>{{post.judulPost}} - {{post.kategoriPost}} - <a href="{{ url_for('edit_post', id=post.idPost) }}">Edit</a> /  <a href="{{ url_for('hapus_post', id=post.idPost) }}">Hapus</a> </p>
+        {% endfor %}
     </div>
 </div>
 
