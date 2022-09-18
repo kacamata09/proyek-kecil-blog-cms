@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col my-3">
+        {% for post in semuapost %}
+        <a href="{{ url_for('detail_post', id={{ post.idPost }}) }}"><h3>{{post.judulPost}}</h3></a>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock content %}

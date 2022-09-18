@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-8">
+        <form action="{{url_for('tambah_post')}}" method='POST'>
+            {{ form.csrf_token }}
+            {{ form.judul.label }}
+            {{ form.judul(class='form-control') }}
+            {{ form.konten.label }}
+            {{ form.konten(class='form-control') }}
+            <input type="submit" value="Simpan">
+        </form>
+    </div>
+</div>
+
+{% endblock content %}

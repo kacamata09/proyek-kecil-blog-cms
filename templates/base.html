@@ -11,15 +11,15 @@
     <title>Hello, world!</title>
   </head>
   <body>
+    <ul>
+      <li><a href="{{ url_for('index') }}">Beranda</a></li>
+      <li><a href="{{ url_for('tambah_post') }}">Tambah Post</a></li>
+      <li><a href="{{ url_for('semua_post') }}">All Post</a></li>
+    </ul>
     <div class="container">
-        <div class="row justify-content-center text-center">
-            <div class=''>
-                <h1>Selamat datang di my blog</h1>
-            </div>
-            <div class="col-6">
-                <h1>ini isinya</h1>
-            </div>
-        </div>
+      
+            {% block content %}{% endblock content %}
+        
     </div>
 
     <!-- Optional JavaScript; choose one of the two! -->

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col">
+        <h1>{{post.judulPost}}</h1>
+        <p>Ditulis oleh User009 pada {{post.tanggalPost}}</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-6">
+        <p>{{post.kontenPost}}</p>
+    </div>
+</div>
+
+{% endblock content %}

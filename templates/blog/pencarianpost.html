@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col">
+        <h3>Anda sedang mencari </h3>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        {% for post in semuapost %}
+        <h5>{{post.judulPost}}</h3>
+        <div class="row">
+            <div class="col">
+                <p class='text-truncate'>{{post.kontenPost}}</p>
+                <a href="">Baca Selengkapnya</a>
+            </div>
+        </div>
+
+
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}
