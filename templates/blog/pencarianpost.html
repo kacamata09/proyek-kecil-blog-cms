@@ -3,12 +3,12 @@
 {% block content %}
 <div class="row">
     <div class="col">
-        <h3>Anda sedang mencari </h3>
+        <h3>Anda sedang mencari {{hasilCari}}</h3>
     </div>
 </div>
 <div class="row">
-    <div class="col">
-        {% for post in kategori %}
+    <div class="col my-3">
+        {% for post in cari %}
         <h5>{{post.judulPost}}</h3>
         <div class="row">
             <div class="col">
@@ -16,7 +16,7 @@
                 <a href="">Baca Selengkapnya</a>
             </div>
         </div>
-
+        <hr>
 
         {% endfor %}
     </div>

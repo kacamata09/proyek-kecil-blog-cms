@@ -134,12 +134,23 @@ def semua_post():
 @app.route('/post/<kategori>/')
 def kategori_post(kategori):
     kategoripost = Blog.query.filter(Blog.kategoriPost.ilike(f'%{kategori}%') )
-    return render_template('blog/pencarianpost.html', kategori = kategoripost, titlepage=f'Kategori Post {kategori}')
+    return render_template('blog/pencarianpost.html', cari = kategoripost, titlepage=f'Kategori Post {kategori}')
 
 # ilike("%ganye%"
 @app.route('/post/halkategori/')
 def halaman_kategori():
     return render_template('blog/halamankategori.html', titlepage='Kategori')
+
+# @app.route('/post/cari/', methods=['GET', 'POST'])
+@app.route('/post/cari/')
+def cari_post():
+    cari = request.args.get('cari')
+    if cari:
+        caripost = Blog.query.filter(Blog.judulPost.ilike(f'%{cari}%') )
+        return render_template('blog/pencarianpost.html', cari = caripost, hasilCari = cari)
+    
+    return render_template('blog/pencariangagal.html')
+    
 
 
 @app.route('/post/<int:id>/')

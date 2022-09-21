@@ -18,6 +18,16 @@
       <li><a href="{{ url_for('halaman_kategori') }}">Kategori Post</a></li>
     </ul>
     <div class="container">
+      <form action="{{ url_for('cari_post', cari=cari) }}" method='GET'>
+        <div class="row justify-content-end">
+                <div class="col-auto">
+                    <input name='cari' type="text" class='form-control'>
+                </div>
+                <div class="col-auto">
+                    <button type='submit' class='btn btn-dark'>Cari</button>
+                </div>
+            </div>
+        </form>
       
             {% block content %}{% endblock content %}
         
