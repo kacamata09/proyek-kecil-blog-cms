@@ -64,10 +64,15 @@ def index():
     return render_template('index.html', titlepage='Home')
 
 # app untuk login, register
-@app.route('/login/')
+@app.route('/login/', methods=['GET','POST'])
 def login():
-    return render_template('login/login.html')
-
+    getUser = Pengguna.query.all()
+    if request.method == 'POST':
+        for user in getUser:
+            if request.form['username'] == user.username:
+                return 'berhasil bro'
+        
+    return render_template('login/login.html', form=Register())
 @app.route('/register/', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
