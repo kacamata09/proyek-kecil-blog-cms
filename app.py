@@ -1,10 +1,14 @@
-from flask import Flask, request, render_template, url_for, redirect
+from flask import Flask, request, render_template, url_for, redirect, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 
-# import forms
+# library untuk login
+from flask_login import UserMixin, login_user, LoginManager, \
+    login_required, logout_user, current_user
+
+# import forms.py
 from forms import TambahPost, Register
 
 
@@ -68,25 +72,60 @@ def index():
 def login():
     getUser = Pengguna.query.all()
     if request.method == 'POST':
+        hitungUser = 0
         for user in getUser:
+            hitungUser += 1
             if request.form['username'] == user.username:
-                return 'berhasil bro'
+                return redirect(url_for('index'))
+            elif hitungUser == len(getUser) and request.form['username'] != user.username:
+                flash('Maaf bro gak ada bro passwordnya')
+                return redirect(url_for('login'))
+        # print(len(getUser))
+        # print(hitungUser)
         
     return render_template('login/login.html', form=Register())
 @app.route('/register/', methods=['GET', 'POST'])
 def register():
-    if request.method == 'POST':
-        nama = request.form['nama']
-        username = request.form['username']
-        sandi = request.form['password']
-        sandi_konfirmasi = request.form['password_konfirmasi']
-        sandi_hash = generate_password_hash(sandi, 'sha256')
-        tambah_pengguna = Pengguna(namaLengkap=nama, username=username, password_hash=sandi_hash)
-        dbku.session.add(tambah_pengguna)
-        dbku.session.commit()
-        return redirect(url_for('login'))
+    nama = None
+    # namaPengguna = None
+    # password = None
+    # pw_konfirmasi = None
+    # lewat = None
+    form = Register(request.form)
+    user = Pengguna.query.filter_by(username=form.username.data).first()
+    print(user)
+    # if request.method == 'POST':
+    if form.validate():
+        user = Pengguna.query.filter_by(username=form.username.data).first()
+        if user is None:
+            nama = form.nama.data
+            username = form.username.data
+            sandi = form.password.data
+            sandi_hash = generate_password_hash(sandi, 'sha256')
+            tambah_pengguna = Pengguna(namaLengkap=nama, username=username, password_hash=sandi_hash)
+            dbku.session.add(tambah_pengguna)
+            dbku.session.commit()
+            return redirect(url_for('login'))
+        nama = form.nama.data
+        form.nama.data = ''
+        form.username.data = ''
+        flash('Sudah ada username yang sama')
         
-    return render_template('login/register.html', form=Register())
+            
+        # form.username.data = ''
+        # form.password.data = ''
+    # if request.method == 'POST':
+    #     nama = request.form['nama']
+    #     username = request.form['username']
+    #     sandi = request.form['password']
+    #     sandi_konfirmasi = request.form['password_konfirmasi']
+    #     sandi_hash = generate_password_hash(sandi, 'sha256')
+    #     tambah_pengguna = Pengguna(namaLengkap=nama, username=username, password_hash=sandi_hash)
+    #     dbku.session.add(tambah_pengguna)
+    #     dbku.session.commit()
+    #     return redirect(url_for('login'))
+        
+    return render_template('login/register.html', form=form)
 
 @app.route('/admin/hapuspengguna/<int:id>')
 def hapus_user(id):
